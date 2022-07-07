@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <title>RESTAURANTE CHINO</title>
+</head>
+
+<body>
+    <div style="text-align: center;" id="container"></div>
+    <h1 style="text-align: center; padding-top: 15px;"> ¿Qué desea hacer?</h1>
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+        <button onclick="GeneralConsult()">Consultar Todo el Menú</button>
+        <button onclick="SpecificConsult()">Consultar un Plato</button>
+        <button onclick="EditConsult()">Editar un Plato</button>
+        <button onclick="EliminateConsult()">Eliminar un Plato</button>
+    </div>
+    <div style="text-align: center; margin-top: 15px; margin-bottom: 15px;">
+        <label style="text-align: center; padding-top: 15px; display: none;" id="SCT" name="SCT"> Seleccione el ID del plato que desea consultar</label>
+        <input style="text-align: center; padding-top: 15px; display: none;" type="text" id="SCI" name="SCI"><br><br>
+        <label style="text-align: center; padding-top: 15px; display: none;" id="ECT" name="ECT"> Seleccione el ID del plato que desea editar</label>
+        <input style="text-align: center; padding-top: 15px; display: none;" type="text" id="ECI" name="ECI"><br><br>
+        <label style="text-align: center; padding-top: 15px; display: none;" id="ECTO" name="ECTO"> Digite Los Ingredientes que desea</label>
+        <input style="text-align: center; padding-top: 15px; display: none;" type="text" id="ECI1" name="ECI1"><br><br>
+        <input style="text-align: center; padding-top: 15px; display: none;" type="text" id="ECI2" name="ECI2"><br><br>
+        <input style="text-align: center; padding-top: 15px; display: none;" type="text" id="ECI3" name="ECI3"><br><br>
+        <label style="text-align: center; padding-top: 15px; display: none;" id="DCT" name="DCT"> Seleccione el ID del plato que desea eliminar</label>
+        <input style="text-align: center; padding-top: 15px; display: none;" type="text" id="DCI" name="DCI"><br><br>
+    </div>
+    <section>
+        <h4>Información</h4>
+        <div name="table" id="table"></div>
+    </section>
+</body>
+</html>
+<script>
+    //Función de coneión Frontend-Backend
+    async function GeneralConsult() {
+        const info = { "1" };
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(info)
+        };
+        await fetch('/gencons', options);
+
+        // Aqui falta la generación de la tabla con los resultados de la busqueda
+    }
+    function SpecificConsult() {
+        document.getElementById("SCT").style.display = "block";
+        document.getElementById("SCI").style.display = "block";
+        document.getElementById("ECT").style.display = "none";
+        document.getElementById("ECI").style.display = "none";
+        document.getElementById("ECTO").style.display = "none";
+        document.getElementById("ECI1").style.display = "none";
+        document.getElementById("ECI2").style.display = "none";
+        document.getElementById("ECI3").style.display = "none";
+        document.getElementById("DCT").style.display = "none";
+        document.getElementById("DCI").style.display = "none";
+
+        if (document.getElementById("SCI") != null) {
+            SpecificConsult2()
+            // Aqui falta la generación de la tabla con el registro de la busqueda
+        } else {
+            alert('Por favor ingrese una ID Válida del 1 al 3')
+        }
+    }
+    async function SpecificConsult2() {
+        ID_P1 = document.getElementById('SCI').value;
+        const info = {ID_P1};
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(info)
+        };
+        await fetch('/espcons', options);
+    }
+    function EditConsult() {
+        document.getElementById("SCT").style.display = "none";
+        document.getElementById("SCI").style.display = "none";
+        document.getElementById("ECT").style.display = "block";
+        document.getElementById("ECI").style.display = "block";
+        document.getElementById("ECTO").style.display = "block";
+        document.getElementById("ECI1").style.display = "block";
+        document.getElementById("ECI2").style.display = "block";
+        document.getElementById("ECI3").style.display = "block";
+        document.getElementById("DCT").style.display = "none";
+        document.getElementById("DCI").style.display = "none";
+
+        if (document.getElementById("ECI") != null) {
+            EditConsult2()
+            // Aqui falta la generación de la tabla con los resultados modificados
+        } else {
+            alert('Por favor ingrese una ID Válida del 1 al 3')
+        }
+    }
+    async function EditConsult2() {
+        ID_P2 = document.getElementById('ECI').value;
+        It1 = document.getElementById('ECI1').value;
+        It2 = document.getElementById('ECI2').value;
+        It3 = document.getElementById('ECI3').value;
+        const info = { ID_P2, It1, It2, It3 };
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(info)
+        };
+        await fetch('/edicons', options);
+    }
+    function EliminateConsult() {
+        document.getElementById("SCT").style.display = "none";
+        document.getElementById("SCI").style.display = "none";
+        document.getElementById("ECT").style.display = "none";
+        document.getElementById("ECI").style.display = "none";
+        document.getElementById("ECTO").style.display = "none";
+        document.getElementById("ECI1").style.display = "none";
+        document.getElementById("ECI2").style.display = "none";
+        document.getElementById("ECI3").style.display = "none";
+        document.getElementById("DCT").style.display = "block";
+        document.getElementById("DCI").style.display = "block";
+
+        if (document.getElementById("DCI") != null) {
+            EliminateConsult2()
+            // Aqui falta la generación de la tabla del menu con la información ya eliminada
+        } else {
+            alert('Por favor ingrese una ID Válida del 1 al 3')
+        }
+    }
+    async function EliminateConsult2() {
+        ID_P3 = document.getElementById('DCI').value;
+        const info = { ID_P3 };
+        const options = {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(info)
+        };
+        await fetch('/delcons', options);
+    }
+</script>

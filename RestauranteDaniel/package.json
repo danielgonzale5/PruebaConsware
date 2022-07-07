@@ -1,0 +1,9 @@
+{
+  "name": "restaurante-daniel",
+  "version": "0.0.0",
+  "description": "RestauranteDaniel",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  }
+}
